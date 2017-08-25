@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            color: #333;
+            background: #fff;
+            padding-bottom: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 1rem 0 .2rem;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .wrap {
+            text-align: center;
+        }
+
+        #clear {
+            border: 0;
+            outline: 0;
+            color: #555;
+            cursor: pointer;
+            background: #fff;
+            border-radius: 2px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>历史记录</h1>
+    <div class="wrap"><button id="clear">清空记录</button></div>
+    <ul id="list">
+
+    </ul>
+</body>
+<script>
+    (function () {
+        const KEY = 'github-user-finder-history';
+
+        window.addEventListener('message', function (event) { // 监听message事件
+            let items = JSON.parse(localStorage.getItem(KEY)) || [];
+            items.unshift(event.data);
+            localStorage.setItem(KEY, JSON.stringify(items));
+            render(items);
+        });
+
+        function render(items) {
+            let $list = document.getElementById("list");
+            items = items || JSON.parse(localStorage.getItem(KEY)) || [];
+            $list.innerHTML = items.map(item => `<li>${item}</li>`).join("");
+        }
+        render();
+
+        document.querySelector('#clear').addEventListener('click', function () {
+            localStorage.setItem(KEY, null);
+            render();
+        })
+
+    })()
+</script>
+
+</html>
