@@ -1,2 +1,4 @@
 # github-user-finder-history
-` postMessage()` 
+` 方法 postMessage()` 
+
+部署在 https://github-user-finder-history-cthiuaqgme.now.sh
